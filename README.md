@@ -66,6 +66,7 @@ The application follows a microservices architecture with the following services
 - **File Storage**: AWS S3
 - **File Upload**: Multer
 - **Winston**: Logging
+- **Swagger**: DocsAPI
 
 ### Development Tools
 - **Linting**: ESLint
