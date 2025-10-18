@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Gateway API
+  version: 1.0.0
+  description: API Documentation for Gateway Service
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/merchant/register:
+    post:
+      summary: Register a new merchant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: merchant123
+                email:
+                  type: string
+                  example: merchant@example.com
+                password:
+                  type: string
+                  example: mySecret123
+                firstName:
+                  type: string
+                  example: John
+                lastName:
+                  type: string
+                  example: Doe
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '200':
+          description: Successful registration
+        '400':
+          description: Bad Request

@@ -1,0 +1,96 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Admin Dashboard",
+    "version": "1.0.0",
+    "description": "API Documentation for Facilities Service"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8002"
+    }
+  ],
+  "paths": {
+    "/api/merchant/register": {
+      "post": {
+        "summary": "Register a new merchant",
+        "tags": ["Merchant Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "merchant@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "mySecret123"
+                  },
+                  "firstName": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                  }
+                },
+                "required": ["firstName", "lastName", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful registration"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/merchant/login": {
+      "post": {
+        "summary": "Login a merchant",
+        "tags": ["Merchant Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "merchant@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "mySecret123"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}

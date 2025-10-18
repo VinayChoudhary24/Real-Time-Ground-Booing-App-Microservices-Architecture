@@ -1,0 +1,100 @@
+<---- HUSKY, Lint-Stage SETUP ---->
+1. lint-stage is already setup in pacakge 
+2. to setup husky, after npm install, 
+run command: npx husky init, 
+run command: mkdir -p .husky && echo -e '#!/bin/sh\n. "$(dirname "$0")/_/husky.sh"\n\nnpx lint-staged' > .husky/pre-commit 
+
+<---- REDIS-BULLMQ SETUP ---->
+1. Install Redis at Global level on machine. if windows First install wsl and install redis from it.
+2. Setup redis config i.e redisClient, connection etc. Connect and run redis in server.ts file. 
+3. Run the the Following cmd in Project Directory bash terminal
+   -- npm i ioredis
+   -- npm i bullmq
+   -- npm i @bull-board/express
+   -- npm i @bull-board/api
+4. Configure the Cron Jobs with bullMQ i.e cron.queue, cron.scheduler, cron.worker
+5. Register the routes for bullMQ UI Dashboard
+// ------------------ Bull Board ------------------ //
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath('/admin/queues');
+createBullBoard({
+  queues: [new BullMQAdapter(cronQueue)],
+  serverAdapter,
+});
+app.use('/admin/queues', serverAdapter.getRouter());
+5. Run the scheduled jobs and workers Manually in server file after DB abd Redis are connected but before server listens
+
+<---- Google Login SETUP ---->
+1. Create a Application on console.cloud.google from header section
+2. After Creation Select the created Application from Notifications section
+3. Get the ClientID and Secret. Click on Navigation menu > APIs & Services > Credentials.
+4. Now Click on Create Credentials > OAuth ClientID > Configure Consent Screen > Click Get Started.
+5. Enter the App Details, Audience Etc. and Finish the project Configuration.
+6. Click Create OAuth Client > Select Application Type. Add 'Authorized JavaScript origins' which will request Google 
+i.e 'http://localhost:5173'. Now add 'Authorized redirect URIs' where users will be redirected and we will get 
+the users data from Google 'http://localhost:5173/oauth2/callback' than Click on Create.
+7. Copy the ClientID and Secret for Application.
+8. Now Install Google-auth-library. npm i google-auth-library@0.11.0-0 or just npm i google-auth-library
+
+
+
+<----##IMPORTANT: SETUP PM2 FOR LOAD BALANCING IN SERVER---->
+https://www.npmjs.com/package/pm2
+<----##IMPORTANT SETUP PM2 FOR LOAD BALANCING IN SERVER---->
+
+<----##IMPORTANT: CORS SETUP FOR EACH SERVICE ---->
+*Setup CORS so that other services dont accept any origins other than our services
+<----##IMPORTANT CORS SETUP FOR EACH SERVICE ---->
+
+<----##IMPORTANT: NPM Package Clean for Different Services---->
+-- Check what Package is not required and remove it from each searvice Accordingly
+<----##IMPORTANT: NPM Package Clean for Different Services---->
+
+<---- REMAINING FUNCTIONALITY ---->
+## BROWSER GATEWAY
+1. Check if cookie-parser is required
+2. HTTP-Proxy Middleware
+3. Refresh Token Logic
+
+## MERCHANT SERVICE
+1. Implement Indexes where required. 
+2. merchantUser Session Handling.
+3. If 2FA Enabled send a mail not SMS, 2FA should be Enabled by default.
+4. NodeMailer is a Temporary Service, need to check a better service for sms and emails.
+5. ErrorLogger should have merchantUserId and LocationId etc, to debug.
+6. we Need Refresh Token Logic with merchantSession for Merchantuser Login.
+
+#Each Location email and phone should be Verified and Merchant cannot update email and phone without verification
+TODO:Add Amenities Array fields for each Facility in Schema.
+TODO:In Merchant Dashboard we need a support tab which will guide merchant on how to use each feature in dashboard(Images, Videos and Steps).
+TODO:ADD FLEXIBLE TIME i.e First it is true for evry Type of Facility but when merchant disables it he will get the Slots if he has only fixed duration of session i.e only one time(3 hrs) not multiple(1 hr, 2hr).
+
+#Create Notification Service
+#In Notification Service Add Multer Upload and check S3
+
+
+## FACILITIES SERVICE
+TODO: Facility Name field is Important. This name will be Used by User to Search the ground. Merchant should name Accordingly i.e name which is Popular in the Users/Players Community.
+TODO: Add a TimeFlexible Toggle for Single Purpose Facility i.e if it is Enabled Even Single Purpose can have multiple sessions like multi purpose.
+TODO: NEED TO PLAN: Discount for Merchants who Subscribe the dashboard. 
+TODO: Add dashboard discount, tax etc functionality.
+TODO: User-To-Merchant Connection Establish: when User request/search the Locations and Facilities to book.
+
+1. The slotsAvailable will be calculated on the basis of dayStartTime, dayEndTime and the hoursPerSession
+2. Indexes for facilitySchema and facilityAvailabilitySchema
+3. Add Validation to Verify the LocationId as per the merchantId
+4. CRON Job or Indexes for 45 days schedule Automatically
+6. Slot date should be in UNIX timestamp
+7. Change slots time Format to 12Hrs. AM/PM
+8. Frontend will send the slots details with respective prices i.e there is no base price. we loop on these 
+slots startTime, endTime and price to make the 45DaysSchedule.
+9. Facility Type: Single purpose and Multi-Purpose. In multi-purpose one turf for multi sports.
+10. Custom Booking i.e booking the turf for 1-2 days
+
+## BOOKING SERVICE
+1. TTL Index which checks the booking payment status and if the status is IN PROGRESS and booking created time is 
+more than 15 Mins automatically delete the document. Just like MerchantSessionSchema TTL.
+
+## REPORTS SERVICE
+
+## Add ACADEMY FEATURE - ACADEMIES, COACHES, TRAINERS ETC.

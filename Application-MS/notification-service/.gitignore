@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+public
+
+# Environment variables
+.env
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# TypeScript
+*.tsbuildinfo
+
+# Dependency directories
+.jest/
+.jest_cache/
+.jest_output/
+.nyc_output/
+
+# Ignore coverage files
+coverage/
+
+# Ignore the environment secrets JSON file if used
+env/.env.json
+
+# Miscellaneous
+*.swp
+*.swo
+
+# Ignore local config overrides
+config/local.js
